@@ -171,9 +171,14 @@ export default function save({ attributes }) {
 							</table>
 						</div>
 
-						<div className="mobile-view">
-							{features.map((feature) => (
-								<div key={feature.id} className="mobile-feature-card">
+						<div className="mobile-view" data-feature-count={features.length}>
+							<div className={`mobile-features-container ${features.length > 3 ? 'fade-out collapsed' : ''}`}>
+								{features.map((feature, index) => (
+									<div 
+										key={feature.id} 
+										className="mobile-feature-card"
+										data-feature-index={index}
+									>
 									<div className="mobile-feature-header">
 										<span className="feature-name">{feature.name}</span>
 										{feature.tooltip && (
@@ -226,7 +231,29 @@ export default function save({ attributes }) {
 										))}
 									</div>
 								</div>
-							))}
+								))}
+							</div>
+							{features.length > 3 && (
+								<div className="mobile-show-more">
+									<button 
+										className="show-more-button"
+										type="button"
+										aria-expanded="false"
+										aria-label={`Show ${features.length - 3} more features`}
+									>
+										<span className="button-text">Show {features.length - 3} More</span>
+										<svg 
+											viewBox="0 0 24 24" 
+											fill="none" 
+											stroke="currentColor" 
+											strokeWidth="2"
+											className="arrow-icon"
+										>
+											<path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+										</svg>
+									</button>
+								</div>
+							)}
 						</div>
 					</>
 				)}

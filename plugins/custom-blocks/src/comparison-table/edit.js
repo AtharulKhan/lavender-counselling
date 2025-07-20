@@ -30,7 +30,7 @@ import {
 	__experimentalVStack as VStack
 } from '@wordpress/components';
 
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -142,6 +142,7 @@ export default function Edit({ attributes, setAttributes }) {
 	} = attributes;
 
 	const [selectedFeature, setSelectedFeature] = useState(0);
+	const [showAllFeatures, setShowAllFeatures] = useState(false);
 
 	// Add competitor (max 5)
 	const addCompetitor = () => {
@@ -521,8 +522,15 @@ export default function Edit({ attributes, setAttributes }) {
 							</table>
 
 							<div className="mobile-view">
-								{features.map((feature) => (
-									<div key={feature.id} className="mobile-feature-card">
+								<div className={`mobile-features-container ${!showAllFeatures && features.length > 3 ? 'fade-out' : ''}`}>
+									{features.map((feature, index) => (
+										<div 
+											key={feature.id} 
+											className={`mobile-feature-card ${!showAllFeatures && index >= 3 ? 'hidden-feature' : ''}`}
+											style={{
+												display: !showAllFeatures && index >= 3 ? 'none' : 'block'
+											}}
+										>
 										<div className="mobile-feature-header">
 											<span className="feature-name">{feature.name}</span>
 											{feature.tooltip && (
@@ -563,7 +571,28 @@ export default function Edit({ attributes, setAttributes }) {
 											))}
 										</div>
 									</div>
-								))}
+									))}
+								</div>
+								{features.length > 3 && (
+									<div className="mobile-show-more">
+										<button 
+											className="show-more-button"
+											onClick={() => setShowAllFeatures(!showAllFeatures)}
+											type="button"
+										>
+											<span>{showAllFeatures ? 'Show Less' : `Show ${features.length - 3} More`}</span>
+											<svg 
+												viewBox="0 0 24 24" 
+												fill="none" 
+												stroke="currentColor" 
+												strokeWidth="2"
+												className={`arrow-icon ${showAllFeatures ? 'rotate' : ''}`}
+											>
+												<path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+											</svg>
+										</button>
+									</div>
+								)}
 							</div>
 						</div>
 					)}

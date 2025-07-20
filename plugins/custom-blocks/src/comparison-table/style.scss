@@ -201,6 +201,119 @@
 	// Mobile view styles
 	.mobile-view {
 		display: none;
+		position: relative;
+
+		.mobile-features-container {
+			position: relative;
+			transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			
+			&.fade-out {
+				&.collapsed {
+					max-height: 650px;
+					overflow: hidden;
+					position: relative;
+					
+					// Show first 3 features normally
+					.mobile-feature-card:nth-child(-n+3) {
+						opacity: 1;
+						transition: opacity 0.3s ease;
+					}
+					
+					// Start fading the 4th feature
+					.mobile-feature-card:nth-child(4) {
+						opacity: 0.3;
+						transition: opacity 0.3s ease;
+					}
+					
+					// Further fade the 5th feature
+					.mobile-feature-card:nth-child(5) {
+						opacity: 0.1;
+						transition: opacity 0.3s ease;
+					}
+					
+					// Hide everything after the 5th
+					.mobile-feature-card:nth-child(n+6) {
+						opacity: 0;
+						display: none;
+					}
+					
+					// Gradient overlay for better fade effect
+					&::after {
+						content: '';
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						height: 250px;
+						background: linear-gradient(to bottom, 
+							transparent 0%, 
+							rgba(255, 255, 255, 0.4) 20%,
+							rgba(255, 255, 255, 0.8) 60%, 
+							rgba(255, 255, 255, 0.95) 80%,
+							rgba(255, 255, 255, 1) 100%
+						);
+						pointer-events: none;
+						z-index: 1;
+					}
+				}
+
+				&:not(.collapsed) {
+					.mobile-feature-card {
+						opacity: 1 !important;
+						display: block !important;
+					}
+				}
+			}
+		}
+
+		.mobile-show-more {
+			margin-top: -10px;
+			text-align: center;
+			position: relative;
+			z-index: 2;
+			
+			.show-more-button {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				padding: 14px 28px;
+				background: #3b82f6;
+				border: none;
+				border-radius: 50px;
+				color: #ffffff;
+				font-size: 16px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
+				
+				&:hover {
+					background: #2563eb;
+					transform: translateY(-2px);
+					box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+				}
+				
+				&:active {
+					transform: translateY(0);
+					box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+				}
+				
+				.button-text {
+					font-size: 16px;
+					letter-spacing: 0.01em;
+				}
+				
+				.arrow-icon {
+					width: 22px;
+					height: 22px;
+					transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+					
+					&.rotate {
+						transform: rotate(180deg);
+					}
+				}
+			}
+		}
 
 		.mobile-feature-card {
 			background-color: #fff;

@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					
 					// Add close button
 					const closeBtn = document.createElement('button');
-					closeBtn.textContent = '×';
+					closeBtn.textContent = 'ï¿½';
 					closeBtn.style.cssText = `
 						position: absolute;
 						top: 8px;
@@ -118,6 +118,72 @@ document.addEventListener('DOMContentLoaded', function() {
 				const walk = (x - startX) * 2;
 				tableContainer.scrollLeft = scrollLeft - walk;
 			});
+		}
+		
+		// Show more/less functionality for mobile view
+		const mobileView = table.querySelector('.mobile-view');
+		if (mobileView) {
+			const showMoreButton = mobileView.querySelector('.show-more-button');
+			const featuresContainer = mobileView.querySelector('.mobile-features-container');
+			const featureCards = mobileView.querySelectorAll('.mobile-feature-card');
+			
+			if (showMoreButton && featuresContainer && featureCards.length > 3) {
+				// Initially collapse the container if not already collapsed
+				if (!featuresContainer.classList.contains('collapsed')) {
+					featuresContainer.classList.add('collapsed');
+				}
+				
+				showMoreButton.addEventListener('click', function() {
+					const isExpanded = !featuresContainer.classList.contains('collapsed');
+					const buttonText = showMoreButton.querySelector('.button-text');
+					const arrowIcon = showMoreButton.querySelector('.arrow-icon');
+					const hiddenCount = featureCards.length - 3;
+					
+					if (isExpanded) {
+						// Collapse with smooth animation
+						featuresContainer.style.maxHeight = featuresContainer.scrollHeight + 'px';
+						featuresContainer.offsetHeight; // Force reflow
+						featuresContainer.classList.add('collapsed');
+						featuresContainer.style.maxHeight = '650px';
+						
+						buttonText.textContent = `Show ${hiddenCount} More`;
+						arrowIcon.classList.remove('rotate');
+						showMoreButton.setAttribute('aria-expanded', 'false');
+						
+						// Smooth scroll to top of mobile view if scrolled past it
+						setTimeout(() => {
+							const mobileViewTop = mobileView.getBoundingClientRect().top + window.scrollY;
+							const currentScroll = window.scrollY;
+							
+							if (currentScroll > mobileViewTop + 200) {
+								window.scrollTo({
+									top: mobileViewTop - 20,
+									behavior: 'smooth'
+								});
+							}
+						}, 300);
+					} else {
+						// Expand with smooth animation
+						featuresContainer.style.maxHeight = '650px';
+						featuresContainer.classList.remove('collapsed');
+						
+						// Calculate and set the full height for smooth transition
+						const fullHeight = featuresContainer.scrollHeight;
+						featuresContainer.style.maxHeight = fullHeight + 'px';
+						
+						buttonText.textContent = 'Show Less';
+						arrowIcon.classList.add('rotate');
+						showMoreButton.setAttribute('aria-expanded', 'true');
+						
+						// Remove max-height after transition completes
+						setTimeout(() => {
+							if (!featuresContainer.classList.contains('collapsed')) {
+								featuresContainer.style.maxHeight = 'none';
+							}
+						}, 500);
+					}
+				});
+			}
 		}
 	});
 	
