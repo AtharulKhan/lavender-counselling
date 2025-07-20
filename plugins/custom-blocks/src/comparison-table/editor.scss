@@ -1,0 +1,94 @@
+/**
+ * The following styles get applied inside the editor only.
+ */
+
+.wp-block-custom-blocks-comparison-table {
+	// Better table appearance in editor
+	.comparison-table-container {
+		margin-top: 20px;
+	}
+
+	.comparison-table {
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		
+		th.company-column {
+			span {
+				display: block;
+				width: 100%;
+			}
+		}
+	}
+
+	// Better RichText visibility in editor
+	[data-rich-text-placeholder]::before {
+		opacity: 0.5;
+		font-style: italic;
+	}
+
+	// Show mobile preview toggle hint
+	.mobile-view {
+		position: relative;
+		margin-top: 30px;
+		
+		&::before {
+			content: "Mobile Preview";
+			position: absolute;
+			top: -25px;
+			left: 0;
+			font-size: 12px;
+			color: #6b7280;
+			font-style: italic;
+			font-weight: 500;
+		}
+	}
+
+	// Editor-specific placeholder styling
+	.comparison-table-placeholder {
+		min-height: 300px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+		
+		h3 {
+			font-size: 1.5rem;
+			font-weight: 600;
+		}
+		
+		p {
+			font-size: 1rem;
+			max-width: 400px;
+			text-align: center;
+		}
+	}
+
+	// Better tooltip icon styling
+	.tooltip-icon {
+		user-select: none;
+		cursor: help;
+	}
+
+	// Ensure SVG icons display properly
+	.value-icon {
+		svg {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+
+	// Editor panels styling improvements
+	.components-panel__body {
+		.components-base-control {
+			margin-bottom: 16px;
+			
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		
+		.components-color-palette {
+			margin-top: 8px;
+		}
+	}
+}
