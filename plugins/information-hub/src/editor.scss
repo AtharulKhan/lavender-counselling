@@ -1,0 +1,57 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-information-hub {
+	// Editor-specific styles to help with editing experience
+	.information-hub-wrapper {
+		padding: 20px;
+		border: 1px dashed #ddd;
+		border-radius: 4px;
+		background-color: #f9f9f9;
+	}
+
+	.information-hub-cards {
+		// Add visual hints in editor
+		.information-card {
+			position: relative;
+			
+			&::before {
+				content: "";
+				position: absolute;
+				top: -5px;
+				left: -5px;
+				right: -5px;
+				bottom: -5px;
+				border: 1px dashed #ccc;
+				border-radius: 14px;
+				pointer-events: none;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+			}
+
+			&:hover::before {
+				opacity: 1;
+			}
+		}
+	}
+
+	// Make RichText fields more visible in editor
+	[data-rich-text-placeholder]::before {
+		opacity: 0.6;
+		font-style: italic;
+	}
+
+	// Editor sidebar styles
+	.components-panel__body {
+		.components-color-palette {
+			margin-bottom: 16px;
+		}
+
+		.components-base-control {
+			margin-bottom: 16px;
+		}
+	}
+}

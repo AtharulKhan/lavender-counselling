@@ -1,0 +1,172 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-information-hub {
+	.information-hub-wrapper {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 40px 20px;
+	}
+
+	.information-hub-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 20px;
+		color: #333;
+		text-align: center;
+
+		@media (max-width: 768px) {
+			font-size: 2rem;
+		}
+	}
+
+	.information-hub-description {
+		font-size: 1.125rem;
+		margin-bottom: 40px;
+		color: #666;
+		text-align: center;
+		max-width: 800px;
+		margin-left: auto;
+		margin-right: auto;
+
+		@media (max-width: 768px) {
+			font-size: 1rem;
+			margin-bottom: 30px;
+		}
+	}
+
+	.information-hub-cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 30px;
+		margin-top: 40px;
+
+		@media (min-width: 769px) and (max-width: 1024px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+	}
+
+	.information-card {
+		border: 2px solid;
+		border-radius: 12px;
+		padding: 30px;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+		&:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+		}
+
+		h3 {
+			font-size: 1.5rem;
+			margin-top: 0;
+			margin-bottom: 20px;
+			color: #333;
+			font-weight: 600;
+		}
+
+		.card-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+
+			li {
+				margin-bottom: 12px;
+				padding-left: 0;
+				display: flex;
+				align-items: flex-start;
+				line-height: 1.6;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+
+				.checkmark {
+					color: #28a745;
+					font-weight: bold;
+					margin-right: 10px;
+					flex-shrink: 0;
+					font-size: 1.2rem;
+				}
+
+				a {
+					color: inherit;
+					text-decoration: none;
+					transition: color 0.3s ease;
+					border-bottom: 1px solid transparent;
+
+					&:hover {
+						color: #0066cc;
+						border-bottom-color: #0066cc;
+					}
+				}
+
+				span {
+					color: #555;
+				}
+			}
+
+			&.links {
+				li {
+					a {
+						color: #0066cc;
+						text-decoration: none;
+						
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+
+			&.bullets {
+				li {
+					padding-left: 20px;
+					position: relative;
+
+					&::before {
+						content: "•";
+						position: absolute;
+						left: 0;
+						color: inherit;
+						font-weight: bold;
+						font-size: 1.2rem;
+					}
+				}
+			}
+
+			&.checkmarks {
+				li {
+					.checkmark {
+						display: inline-block;
+						width: 20px;
+					}
+				}
+			}
+		}
+	}
+
+	// Alignment support
+	&.alignwide {
+		.information-hub-wrapper {
+			max-width: 1400px;
+		}
+	}
+
+	&.alignfull {
+		.information-hub-wrapper {
+			max-width: 100%;
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+	}
+}
