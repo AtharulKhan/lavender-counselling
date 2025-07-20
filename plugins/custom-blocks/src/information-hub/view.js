@@ -1,46 +1,44 @@
 /**
- * Use this file for JavaScript code that you want to run in the front-end 
- * on posts/pages that contain this block.
- *
- * When this file is defined as the value of the `viewScript` property
- * in `block.json` it will be enqueued on the front end of the site.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
+ * Frontend JavaScript for the Information Hub block
+ * Handles interactive checklist functionality
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-	// Add smooth scrolling for anchor links within the information hub
-	const infoHubLinks = document.querySelectorAll('.wp-block-lavender-counselling-information-hub .card-list.links a[href^="#"]');
+	// Find all information hub blocks on the page
+	const informationHubs = document.querySelectorAll('.wp-block-custom-blocks-information-hub');
 	
-	infoHubLinks.forEach(link => {
-		link.addEventListener('click', function(e) {
-			const href = this.getAttribute('href');
-			
-			// Only handle anchor links
-			if (href && href.startsWith('#') && href.length > 1) {
-				const target = document.querySelector(href);
-				
-				if (target) {
-					e.preventDefault();
-					target.scrollIntoView({
-						behavior: 'smooth',
-						block: 'start'
-					});
-				}
-			}
-		});
-	});
-
-	// Add hover effect for cards
-	const cards = document.querySelectorAll('.wp-block-lavender-counselling-information-hub .information-card');
-	
-	cards.forEach(card => {
-		card.addEventListener('mouseenter', function() {
-			this.style.transform = 'translateY(-5px)';
-		});
+	informationHubs.forEach(hub => {
+		// Find all checklist items
+		const checklistItems = hub.querySelectorAll('.item-type-checklist');
 		
-		card.addEventListener('mouseleave', function() {
-			this.style.transform = 'translateY(0)';
+		checklistItems.forEach(item => {
+			// Make checklist items interactive
+			item.style.cursor = 'pointer';
+			
+			item.addEventListener('click', function(e) {
+				// Prevent link clicks from toggling
+				if (e.target.tagName === 'A') return;
+				
+				// Toggle completed state
+				const isCompleted = this.getAttribute('data-completed') === 'true';
+				this.setAttribute('data-completed', !isCompleted);
+				
+				// Update the icon
+				const icon = this.querySelector('.item-icon');
+				if (icon) {
+					icon.textContent = !isCompleted ? '☑' : '☐';
+				}
+				
+				// Update the text style
+				const textSpan = this.querySelector('span:not(.item-icon)');
+				if (textSpan) {
+					if (!isCompleted) {
+						textSpan.classList.add('completed');
+					} else {
+						textSpan.classList.remove('completed');
+					}
+				}
+			});
 		});
 	});
 });

@@ -18,25 +18,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Registers all blocks found in the build directory.
+ * Registers the block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it registers also all assets so they can be enqueued
+ * through the block editor in the corresponding context.
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function custom_blocks_init() {
-	$build_dir = __DIR__ . '/build';
+	$blocks_directory = __DIR__ . '/build/';
 	
-	// Check if build directory exists
-	if ( ! is_dir( $build_dir ) ) {
-		return;
-	}
-	
-	// Get all subdirectories in the build folder
-	$block_dirs = glob( $build_dir . '/*', GLOB_ONLYDIR );
-	
-	foreach ( $block_dirs as $block_dir ) {
-		// Check if block.json exists in this directory
-		if ( file_exists( $block_dir . '/block.json' ) ) {
-			register_block_type( $block_dir );
+	// Register all blocks found in the build directory
+	if ( file_exists( $blocks_directory ) ) {
+		$block_folders = glob( $blocks_directory . '*', GLOB_ONLYDIR );
+		
+		foreach ( $block_folders as $block_folder ) {
+			register_block_type( $block_folder );
 		}
 	}
 }

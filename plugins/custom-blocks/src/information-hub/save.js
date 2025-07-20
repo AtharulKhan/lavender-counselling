@@ -16,54 +16,66 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
  * @return {Element} Element to render.
  */
 export default function save({ attributes }) {
-	const { sectionTitle, sectionDescription, cards } = attributes;
-	const blockProps = useBlockProps.save();
+	const { cards, globalBackgroundColor, globalBorderColor, applyGlobalColors } = attributes;
+
+	const getItemIcon = (type, completed) => {
+		switch(type) {
+			case 'checkmark':
+				return '✓';
+			case 'checklist':
+				return completed ? '☑' : '☐';
+			case 'bullet':
+				return '•';
+			case 'link':
+				return '🔗';
+			default:
+				return '•';
+		}
+	};
 
 	return (
-		<div {...blockProps}>
+		<div { ...useBlockProps.save() }>
 			<div className="information-hub-wrapper">
-				{sectionTitle && (
-					<RichText.Content 
-						tagName="h2" 
-						value={sectionTitle} 
-						className="information-hub-title"
-					/>
+				{cards.length > 0 && (
+					<div className="information-hub-cards">
+						{cards.map((card) => (
+							<div 
+								key={card.id} 
+								className="information-card"
+								style={{
+									backgroundColor: applyGlobalColors && globalBackgroundColor ? globalBackgroundColor : card.backgroundColor,
+									borderColor: applyGlobalColors && globalBorderColor ? globalBorderColor : card.borderColor
+								}}
+							>
+								<RichText.Content
+									tagName="h3"
+									value={card.title}
+								/>
+								
+								{card.items && card.items.length > 0 && (
+									<ul className="card-items">
+										{card.items.map((item) => (
+											<li key={item.id} className={`item-type-${item.type}`} data-completed={item.completed}>
+												<span className="item-icon">
+													{getItemIcon(item.type, item.completed)}
+												</span>
+												{item.type === 'link' && item.url ? (
+													<a href={item.url} target="_blank" rel="noopener noreferrer">
+														{item.text}
+													</a>
+												) : (
+													<span className={item.completed ? 'completed' : ''}>
+														{item.text}
+													</span>
+												)}
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
+						))}
+					</div>
 				)}
-				
-				{sectionDescription && (
-					<RichText.Content 
-						tagName="p" 
-						value={sectionDescription} 
-						className="information-hub-description"
-					/>
-				)}
-
-				<div className="information-hub-cards">
-					{cards.map((card, index) => (
-						<div 
-							key={card.id} 
-							className="information-card"
-							style={{
-								backgroundColor: card.backgroundColor,
-								borderColor: card.borderColor
-							}}
-						>
-							<h3>{card.title}</h3>
-							<ul className={`card-list ${card.listType}`}>
-								{card.items.map((item, itemIndex) => (
-									<li key={itemIndex}>
-										{card.listType === 'checkmarks' && <span className="checkmark">✓</span>}
-										{card.listType === 'links' ? (
-											<a href={item.url}>{item.text}</a>
-										) : (
-											<span>{item.text}</span>
-										)}
-									</li>
-								))}
-							</ul>
-						</div>
-					))}
-				</div>
 			</div>
 		</div>
 	);

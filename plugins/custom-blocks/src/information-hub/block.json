@@ -1,39 +1,29 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "lavender-counselling/information-hub",
+	"name": "custom-blocks/information-hub",
 	"version": "0.1.0",
 	"title": "Information Hub",
-	"category": "design",
+	"category": "widgets",
 	"icon": "info",
-	"description": "Create an information hub with up to 6 customizable cards, different list types, and color options.",
+	"description": "Create an information hub with up to 9 customizable cards with different list types and color options.",
 	"example": {},
 	"attributes": {
-		"sectionTitle": {
-			"type": "string",
-			"default": "Information Hub"
+		"cards": {
+			"type": "array",
+			"default": []
 		},
-		"sectionDescription": {
+		"globalBackgroundColor": {
 			"type": "string",
 			"default": ""
 		},
-		"cards": {
-			"type": "array",
-			"default": [
-				{
-					"id": "card-1",
-					"title": "Card Title",
-					"listType": "links",
-					"items": [
-						{
-							"text": "Item 1",
-							"url": "#"
-						}
-					],
-					"backgroundColor": "#FFF4E6",
-					"borderColor": "#FF8C00"
-				}
-			]
+		"globalBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"applyGlobalColors": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {
@@ -46,7 +36,7 @@
 	},
 	"textdomain": "custom-blocks",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
+	"editorStyle": "file:./index.css", 
 	"style": "file:./style-index.css",
 	"viewScript": "file:./view.js"
 }
