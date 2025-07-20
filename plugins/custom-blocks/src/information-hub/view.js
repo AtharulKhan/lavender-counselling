@@ -10,7 +10,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 	// Add smooth scrolling for anchor links within the information hub
-	const infoHubLinks = document.querySelectorAll('.wp-block-create-block-information-hub .card-list.links a[href^="#"]');
+	const infoHubLinks = document.querySelectorAll('.wp-block-lavender-counselling-information-hub .card-list.links a[href^="#"]');
 	
 	infoHubLinks.forEach(link => {
 		link.addEventListener('click', function(e) {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// Add hover effect for cards
-	const cards = document.querySelectorAll('.wp-block-create-block-information-hub .information-card');
+	const cards = document.querySelectorAll('.wp-block-lavender-counselling-information-hub .information-card');
 	
 	cards.forEach(card => {
 		card.addEventListener('mouseenter', function() {
