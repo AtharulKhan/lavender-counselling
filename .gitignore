@@ -1,0 +1,8 @@
+/uploads/
+/cache/
+/backup-db/
+/advanced-cache.php
+/wp-cache-config.php
+/upgrade/
+*.log
+.DS_Store
